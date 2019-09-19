@@ -1,0 +1,11 @@
+*.retry
+.DS_STORE
+docs/_site
+docs/_posts
+docs/.sass-cache
+docs/.jekyll-metadata
+docs/404.html
+*.todo
+.ipynb_checkpoints/
+*.ipynb
+_site

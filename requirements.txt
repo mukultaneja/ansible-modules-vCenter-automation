@@ -1,0 +1,2 @@
+pyVmomi>=6.7.0
+pyyaml>=5.1.1
