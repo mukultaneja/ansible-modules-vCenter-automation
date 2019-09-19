@@ -17,12 +17,12 @@ ansible-modules-vCenter-automation is a set of ansible modules that setup and ma
 ### Build & Run
 
 1. pip3.6 install -r requirements.txt
-2. git clone https://github.com/vmware/ansible-module-vcloud-director
+2. git clone https://github.com/mukultaneja/ansible-modules-vCenter-automation.git
 3. cd ansible-modules-vCenter-automation
 
 ## Documentation
 
-## Releases & Major Branches
+Refer to [docs](https://github.com/mukultaneja/ansible-modules-vCenter-automation/tree/master/docs) to know more about modules and available params for them.
 
 ## Contributing
 
