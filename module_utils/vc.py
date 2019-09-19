@@ -1,14 +1,11 @@
 
 
 import os
-import sys
 import ssl
 import time
 from pyVmomi import vim
 from pyVim import connect
 from ansible.module_utils.basic import AnsibleModule
-
-sys.path.append("/Users/mtaneja/Work/Projects/VMware/lcm/vcps/vcps-core/vcps-test-root/packages3.7/")
 
 
 def vc_argument_spec():
