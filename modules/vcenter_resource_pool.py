@@ -6,12 +6,12 @@ from ansible.module_utils.vc import VcAnsibleModule
 from ansible.module_utils.specs.vcenter_resource_pool_spec import VcResourcePoolSpec
 
 
-VC_RESOURCE_POOL_STATES = ['present']
+VC_RESOURCE_POOL_STATES = ['present', 'absent']
 
 
 def vc_resource_pool_argument_spec():
     return dict(
-        cluster_name=dict(type='str', required=True),
+        cluster_name=dict(type='str', required=False),
         resource_pool_name=dict(type='str', required=True),
         resource_pool_spec=dict(type='str', required=False, default=None),
         state=dict(choices=VC_RESOURCE_POOL_STATES, required=True)
@@ -27,6 +27,9 @@ class VcResourcePool(VcAnsibleModule):
         if state == "present":
             return self._create()
 
+        if state == "absent":
+            return self._delete()
+
     def _get_cluster(self, cluster_name):
         content = self.si.content
         clusters = content.viewManager.CreateContainerView(
@@ -38,6 +41,18 @@ class VcResourcePool(VcAnsibleModule):
             raise ValueError("No cluster {0} found".format(cluster_name))
 
         return cluster
+
+    def _get_resource_pool(self, resource_pool_name):
+        content = self.si.content
+        resource_pools = content.viewManager.CreateContainerView(
+            content.rootFolder, [vim.ResourcePool], recursive=True).view
+        resource_pool = list(filter(lambda r: r.name == resource_pool_name, resource_pools))
+        resource_pool = resource_pool[0] if len(resource_pool) > 0 else None
+
+        if resource_pool is None:
+            raise ValueError("No Resource Pool {0} found".format(resource_pool_name))
+
+        return resource_pool
 
     def _prepare_resource_pool_spec(self, resource_pool_spec):
         spec = VcResourcePoolSpec()
@@ -63,6 +78,23 @@ class VcResourcePool(VcAnsibleModule):
             response['msg'] = 'ResourcePool {0} is already present'.format(resource_pool_name)
         else:
             response['msg'] = "ResourcePool {0} has been created".format(resource_pool_name)
+            response['changed'] = True
+
+        return response
+
+    def _delete(self):
+        response = dict()
+        response['changed'] = False
+        resource_pool_name = self.params.get("resource_pool_name")
+        resource_pool = self._get_resource_pool(resource_pool_name)
+
+        try:
+            task = resource_pool.Destroy_Task()
+            self.wait_for_task(task)
+        except Exception as error:
+            response['msg'] = error
+        else:
+            response['msg'] = 'Resource Pool {0} has been deleted'.format(resource_pool_name)
             response['changed'] = True
 
         return response
