@@ -2,7 +2,7 @@
 from pyVmomi import vim
 from ansible.module_utils.vc import VcAnsibleModule
 
-VC_DATACENTER_STATES = ['present', 'absent', 'update']
+VC_DATACENTER_STATES = ['present', 'absent']
 
 
 def vc_datacenter_argument_spec():
