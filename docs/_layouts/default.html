@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Ansible Modules for vCenter Automation</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css">
+        pre code {
+            background-color: black;
+            color: white;
+            display: block;
+            padding: 0px;
+        }
+
+        .page-header {
+            color: #fff;
+            text-align: center;
+            background-color: #159957;
+            background-image: linear-gradient(120deg, #155799, #159957);
+            padding: 5rem 6rem;
+        }
+
+        h2, h3, h5 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: normal;
+            color: #159957;
+        }
+
+        a {
+            list-style: none
+        }
+        .back-to-top{margin:0;position:fixed;bottom:15px;right:10px;z-index:100;display:none;text-decoration:none;text-decoration:none;color:black;background-color:white;border-color:black;}
+        .back-to-top:hover{background-color:white;border-color:black;}
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid mt-2 p-4">
+        <div class="page-header mb-3">
+            <h1 class="text-center">Ansible Modules for vCenter Automation</h1>
+        </div>
+        <hr />
+        <div class="content p-2">
+            <div class="row">
+                <div class="use-cases col-3">
+                    <h2 class="text-center">Use Cases</h2>
+                    <hr />
+                    <div class="list-group">
+                        <a href="#" class="settings list-group-item list-group-item-action active">Environment Settings</a>
+                        <a href="#datacenter" class="datacenter list-group-item list-group-item-action">Datacenter</a>
+                        <a href="#cluster" class="cluster list-group-item list-group-item-action">Cluster</a>
+                        <a href="#resource-pool" class="resource-pool list-group-item list-group-item-action">Resource Pool</a>
+                    </div>
+                </div>
+                <div class="col-8">
+                    {{ content }}
+                </div>
+                <div class="col-1">
+                    <a class="btn btn-primary back-to-top">
+                        <img src="images/uparrow.jpg" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $("document").ready(function() {
+            var links = ['a.settings', 'a.datacenter', 'a.cluster', 'a.resource-pool'],
+                offset = 600,
+                duration = 1000;
+            $.each(links, function(index, value) {
+                $(value).click(function(e) {
+                    e.preventDefault()
+                    $('html, body').animate({
+                        scrollTop: $($.attr(this, 'href')).offset().top
+                    }, 1200);
+                    return false;
+                });
+            });
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > offset) {
+                    $('.back-to-top').fadeIn(duration);
+                } else {
+                    $('.back-to-top').fadeOut(duration);
+                }
+            });
+            $('.back-to-top').click(function(event) {
+                event.preventDefault();
+                $('html, body').animate({
+                    scrollTop: 0
+                }, duration);
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>
